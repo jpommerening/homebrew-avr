@@ -5,13 +5,13 @@ class Simulavr < Formula
   url 'http://download.savannah.gnu.org/releases/simulavr/simulavr-1.0.0.tar.gz'
   sha1 'e7cacc74be974793bd9c18330ec8d128fbd17d42'
 
-  #option 'with-usb', 'Compile AVRDUDE with USB support.'
-
   depends_on 'avr-binutils'
   depends_on 'swig-1.3'
 
   def patches
-    'https://raw.github.com/jpommerening/homebrew-simulavr/master/patches/simulavr-1.0.0-resize.patch'
+    patchdir = path.realpath.dirname.to_s
+    
+    [ patchdir + '/patches/simulavr-1.0.0-resize.patch' ]
   end
 
   def install
