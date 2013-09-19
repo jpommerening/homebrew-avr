@@ -10,7 +10,6 @@ class AvrGdb < Formula
   def install
     system "./configure", "--prefix=#{prefix}",
                           "--target=avr",
-                          "--languages=c,c++",
                           "--program-prefix=avr"
     system "make"
     system "make install"
