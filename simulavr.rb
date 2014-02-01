@@ -7,6 +7,7 @@ class Simulavr < Formula
   sha1 'e7cacc74be974793bd9c18330ec8d128fbd17d42'
 
   depends_on 'avr-binutils'
+  depends_on 'avr-libc'
   depends_on 'jpommerening/simulavr/swig-1.3'
 
   if build.head?
