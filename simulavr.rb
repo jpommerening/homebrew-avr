@@ -6,8 +6,8 @@ class Simulavr < Formula
   url 'http://download.savannah.gnu.org/releases/simulavr/simulavr-1.0.0.tar.gz'
   sha1 'e7cacc74be974793bd9c18330ec8d128fbd17d42'
 
-  depends_on 'avr-binutils'
-  depends_on 'avr-libc'
+  depends_on 'larsimmisch/avr/avr-binutils'
+  depends_on 'larsimmisch/avr/avr-libc'
   depends_on 'jpommerening/simulavr/swig-1.3'
 
   if build.head?

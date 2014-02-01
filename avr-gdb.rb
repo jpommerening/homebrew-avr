@@ -5,7 +5,7 @@ class AvrGdb < Formula
   url 'ftp://ftp.gnu.org/gnu/gdb/gdb-7.6.1.tar.gz'
   sha1 '13beaab7d28f8591777c9271f0c20a22c70d6252'
 
-  depends_on 'avr-binutils'
+  depends_on 'larsimmisch/avr/avr-binutils'
 
   def install
     system "./configure", "--prefix=#{prefix}",
