@@ -2,15 +2,21 @@ require 'formula'
 
 class Simulavr < Formula
   homepage 'http://savannah.nongnu.org/projects/simulavr/'
-  url 'http://github.com/Traumflug/simulavr/tarball/c93f23872c85444b9bd0657755b9c674d180ae69'
-  sha1 '7757d5d3656c6260d3db48345cb7ebeade7e52ae'
+  head 'https://github.com/Traumflug/simulavr.git'
+  url 'http://download.savannah.gnu.org/releases/simulavr/simulavr-1.0.0.tar.gz'
+  sha1 'e7cacc74be974793bd9c18330ec8d128fbd17d42'
 
   depends_on 'avr-binutils'
-  depends_on 'swig-1.3'
+  depends_on 'jpommerening/simulavr/swig-1.3'
 
   def patches
     patchdir = path.realpath.dirname.to_s
-    []
+
+    unless build.head?
+      [ patchdir + '/patches/simulavr-1.0.0-resize.patch' ]
+    else
+      []
+    end
   end
 
   def install
