@@ -15,12 +15,16 @@ class Simulavr < Formula
     unless build.head?
       [ patchdir + '/patches/simulavr-1.0.0-resize.patch' ]
     else
-      []
+      [ patchdir + '/patches/simulavr-HEAD-bootstrap.patch' ]
     end
   end
 
   def install
     multios = `gcc --print-multi-os-dir`.chomp
+
+    if build.head?
+      system "./bootstrap"
+    end
 
     system "./configure", "--with-bfd=#{Formula.factory('avr-binutils').opt_prefix}",
                           "--with-libiberty=#{Formula.factory('avr-binutils').opt_prefix}/lib/#{multios}",
