@@ -19,7 +19,7 @@ class Simulavr < Formula
     unless build.head?
       [ patchdir + '/patches/simulavr-1.0.0-resize.patch' ]
     else
-      [ patchdir + '/patches/simulavr-HEAD-bootstrap.patch' ]
+      [ patchdir + '/patches/simulavr-HEAD-glibtool.patch' ]
     end
   end
 

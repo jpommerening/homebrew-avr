@@ -1,0 +1,23 @@
+--- simulavr-1.0.0.broken/bootstrap
++++ simulavr-1.0.0.fixed/bootstrap
+@@ -27,9 +27,9 @@ test -d src || {
+     exit 1
+ }
+ 
+-(libtool --version) < /dev/null > /dev/null 2>&1 || {
++(glibtool --version) < /dev/null > /dev/null 2>&1 || {
+     echo
+-    echo "You must have libtool installed to compile $PROJECT."
++    echo "You must have glibtool installed to compile $PROJECT."
+     exit 1
+ }
+ 		  
+@@ -81,7 +81,7 @@ case ${mode} in
+   generate)
+     aclocal ${verbose} -I m4
+     autoheader ${verbose}
+-    libtoolize ${verbose} --copy --force
++    glibtoolize ${verbose} --copy --force
+     automake ${verbose} --add-missing --copy
+     autoconf ${verbose}
+     echo
