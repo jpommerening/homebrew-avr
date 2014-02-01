@@ -9,6 +9,10 @@ class Simulavr < Formula
   depends_on 'avr-binutils'
   depends_on 'jpommerening/simulavr/swig-1.3'
 
+  if build.head?
+    depends_on 'autoconf'
+  end
+
   def patches
     patchdir = path.realpath.dirname.to_s
 
@@ -20,7 +24,7 @@ class Simulavr < Formula
   end
 
   def install
-    multios = `gcc --print-multi-os-dir`.chomp
+    multios = `gcc --print-multi-os-directory`.chomp
 
     if build.head?
       system "./bootstrap"
