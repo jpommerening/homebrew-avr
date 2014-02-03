@@ -8,6 +8,8 @@ class AvrGdb < Formula
   depends_on 'jpommerening/avr/avr-binutils'
 
   def install
+    multios = `gcc --print-multi-os-directory`.chomp
+
     system "./configure", "--prefix=#{prefix}",
                           "--target=avr",
                           "--program-prefix=avr-"

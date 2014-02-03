@@ -2,9 +2,9 @@ require 'formula'
 
 class Simulavr < Formula
   homepage 'http://savannah.nongnu.org/projects/simulavr/'
-  head 'https://github.com/Traumflug/simulavr.git'
   url 'http://download.savannah.gnu.org/releases/simulavr/simulavr-1.0.0.tar.gz'
   sha1 'e7cacc74be974793bd9c18330ec8d128fbd17d42'
+  head 'https://github.com/jpommerening/simulavr.git'
 
   depends_on 'jpommerening/avr/avr-binutils'
   depends_on 'jpommerening/avr/avr-libc'
