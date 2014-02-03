@@ -26,13 +26,14 @@ class Simulavr < Formula
 
   def install
     multios = `gcc --print-multi-os-directory`.chomp
+    osrelease = `/usr/sbin/sysctl -n kern.osrelease`.chomp
     binutils = Formula.factory('jpommerening/avr/avr-binutils')
 
     if build.head?
       system "./bootstrap"
     end
 
-    system "./configure", "--with-bfd=#{binutils.opt_prefix}/#{multios}-apple-darwin13.0.0/avr",
+    system "./configure", "--with-bfd=#{binutils.opt_prefix}/#{multios}-apple-darwin#{osrelease}/avr",
                           "--with-libiberty=#{binutils.opt_prefix}/lib/#{multios}",
                           "--prefix=#{prefix}",
                           "LDFLAGS=-lz"
