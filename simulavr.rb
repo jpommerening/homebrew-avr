@@ -18,10 +18,12 @@ class Simulavr < Formula
     patchdir = path.realpath.dirname.to_s
 
     unless build.head?
-      [ patchdir + '/patches/simulavr-1.0.0-resize.patch' ]
+      patchlist = [ patchdir + '/patches/simulavr-1.0.0-resize.patch' ]
     else
-      [ patchdir + '/patches/simulavr-HEAD-glibtool.patch' ]
+      patchlist = [ patchdir + '/patches/simulavr-HEAD-glibtool.patch' ]
     end
+    
+    return patchlist + ['/patches/simulavr-1.0.0_avrgcc4.7.2-darwin.patch']
   end
 
   def install
