@@ -18,9 +18,9 @@ class Simulavr < Formula
     patchdir = path.realpath.dirname.to_s
 
     unless build.head?
-      patchlist = [ patchdir + '/patches/simulavr-1.0.0-resize.patch' ]
+      patchlist = [ 'file://' + patchdir + '/patches/simulavr-1.0.0-resize.patch' ]
     else
-      patchlist = [ patchdir + '/patches/simulavr-HEAD-glibtool.patch' ]
+      patchlist = [ 'file://' + patchdir + '/patches/simulavr-HEAD-glibtool.patch' ]
     end
     
     return patchlist + ['/patches/simulavr-1.0.0_avrgcc4.7.2-darwin.patch']
