@@ -1,0 +1,338 @@
+diff -rupN simulavr-1.0.0-original/examples/atmega128_timer/main.c simulavr-1.0.0-new/examples/atmega128_timer/main.c
+--- simulavr-1.0.0-original/examples/atmega128_timer/main.c	2012-02-12 07:26:38.000000000 -0800
++++ simulavr-1.0.0-new/examples/atmega128_timer/main.c	2014-05-20 13:26:11.000000000 -0700
+@@ -5,7 +5,7 @@
+ volatile int timer2_ticks;
+ 
+ /* Every ~ms */
+-ISR(SIG_OUTPUT_COMPARE2)
++ISR(TIMER2_COMP_vect)
+ {                               /* Every ~1ms */
+    timer2_ticks++;
+ }
+diff -rupN simulavr-1.0.0-original/examples/atmel_key/Makefile.am simulavr-1.0.0-new/examples/atmel_key/Makefile.am
+--- simulavr-1.0.0-original/examples/atmel_key/Makefile.am	2012-02-12 07:26:38.000000000 -0800
++++ simulavr-1.0.0-new/examples/atmel_key/Makefile.am	2014-05-20 13:26:11.000000000 -0700
+@@ -10,7 +10,7 @@ AVR_CPU=atmega128
+ AVR_CPU_CFLAGS =-mmcu=$(AVR_CPU)
+ AVR_CFLAGS = $(AVR_CPU_CFLAGS) -I. -DF_CPU=4000000UL \
+   -Os -funsigned-char -funsigned-bitfields -fpack-struct \
+-  -fshort-enums -Wall -Wstrict-prototypes 
++  -fshort-enums -Wall -Wstrict-prototypes -D__DELAY_BACKWARD_COMPATIBLE__
+ 
+ EXTRA_DIST = kb.c kb.h main.c pindefs.h scancodes.h serial.c serial.h \
+   StdDefs.c StdDefs.h README Notes.txt atmel_key.tcl
+diff -rupN simulavr-1.0.0-original/examples/atmel_key/StdDefs.c simulavr-1.0.0-new/examples/atmel_key/StdDefs.c
+--- simulavr-1.0.0-original/examples/atmel_key/StdDefs.c	2012-02-12 07:26:38.000000000 -0800
++++ simulavr-1.0.0-new/examples/atmel_key/StdDefs.c	2014-05-20 13:26:11.000000000 -0700
+@@ -3,9 +3,8 @@
+  */
+ 
+ // Common routines used in most programs
+-
++#define __DELAY_BACKWARD_COMPATIBLE__
+ #include <avr/io.h>
+-#include <util/delay.h>
+ #include <stdlib.h>
+ #include <string.h>
+ #include <compat/deprecated.h>
+@@ -13,8 +12,6 @@
+ #include "StdDefs.h"
+ #include "serial.h"
+ 
+-// 02-Sep-2008 K. Schwichtenberg _delay_ms included for a useful timing
+-
+ void setbaud(BaudRate br)
+    {
+    UART_BAUD_REG = br;
+@@ -54,16 +51,6 @@ void test_pin(void)
+        sbi(TESTPIN_PORT, TESTPIN_BIT);
+    }
+ 
+-// Delay in 1/10's of a millisecond
+-void msleep(INT16U ms)
+-    { /* This loop does not work with optimization != 0. Therefore we use
+-         avr-libc _delay routines K. Schwichtenberg
+-	INT16S i,j;
+-	for (i = 1; i < ms; i++)
+-		for (j = 1; j < ONETENTH_MS; j++); / * to give 1/10 ms*/
+-        _delay_ms(ms); // Changed K. Schwichtenberg
+-    }
+-
+ //------------------------------------------------------------
+ // void putBCD(INT16S X, CHARU length, CHARU TrailingSpace)
+ //
+diff -rupN simulavr-1.0.0-original/examples/atmel_key/StdDefs.h simulavr-1.0.0-new/examples/atmel_key/StdDefs.h
+--- simulavr-1.0.0-original/examples/atmel_key/StdDefs.h	2012-02-12 07:26:38.000000000 -0800
++++ simulavr-1.0.0-new/examples/atmel_key/StdDefs.h	2014-05-20 13:26:11.000000000 -0700
+@@ -63,51 +63,51 @@ void print_hexbyte(unsigned char i);
+    #define UART_BAUD_REG_H      UBRR0H
+    #define UART_CONTROL_REG     UCSR0B
+    #define UART_STATUS_REG      UCSR0A
+-   #define UART_RCV_INT_VECTOR  SIG_UART0_RECV
+-   #define UART_REG_EMPTY_INT_VECTOR  SIG_UART0_DATA
++   #define UART_RCV_INT_VECTOR  USART0_RX_vect
++   #define UART_REG_EMPTY_INT_VECTOR  USART0_UDRE_vect
+    #define UART_DATA_REG        UDR0
+ #elif DEVICE_NAME == ATMEGA163
+    #define UART_BAUD_REG        UBRR
+    #define UART_CONTROL_REG     UCSRB
+    #define UART_STATUS_REG      UCSRA
+-   #define UART_RCV_INT_VECTOR  SIG_UART_RECV
+-   #define UART_REG_EMPTY_INT_VECTOR  SIG_UART_DATA
++   #define UART_RCV_INT_VECTOR  UART_RX_vect
++   #define UART_REG_EMPTY_INT_VECTOR  UART_UDRE_vect
+    #define UART_DATA_REG        UDR
+ #elif DEVICE_NAME == AT90S2313
+    #define UART_BAUD_REG        UBRR
+    #define UART_CONTROL_REG     UCR
+    #define UART_STATUS_REG      USR
+-   #define UART_RCV_INT_VECTOR  SIG_UART_RECV
+-   #define UART_REG_EMPTY_INT_VECTOR  SIG_UART_DATA
++   #define UART_RCV_INT_VECTOR  UART_RX_vect
++   #define UART_REG_EMPTY_INT_VECTOR  UART_UDRE_vect
+    #define UART_DATA_REG        UDR
+ #elif DEVICE_NAME == AT90S4433
+    #define UART_BAUD_REG        UBRRL
+    #define UART_CONTROL_REG     UCSRB
+    #define UART_STATUS_REG      UCSRA
+-   #define UART_RCV_INT_VECTOR  SIG_UART_RECV
+-   #define UART_REG_EMPTY_INT_VECTOR  SIG_UART_DATA
++   #define UART_RCV_INT_VECTOR  UART_RX_vect
++   #define UART_REG_EMPTY_INT_VECTOR  UART_UDRE_vect
+    #define UART_DATA_REG        UDR
+ #elif DEVICE_NAME == AT90S4434
+    #define UART_BAUD_REG        UBRR
+    #define UART_CONTROL_REG     UCR
+    #define UART_STATUS_REG      USR
+-   #define UART_RCV_INT_VECTOR  SIG_UART_RECV
+-   #define UART_REG_EMPTY_INT_VECTOR  SIG_UART_DATA
++   #define UART_RCV_INT_VECTOR  UART_RX_vect
++   #define UART_REG_EMPTY_INT_VECTOR  UART_UDRE_vect
+    #define UART_DATA_REG        UDR
+ #elif DEVICE_NAME == AT90S8515
+    #define UART_BAUD_REG        UBRR
+    #define UART_CONTROL_REG     UCR
+    #define UART_STATUS_REG      USR
+-   #define UART_RCV_INT_VECTOR  SIG_UART_RECV
+-   #define UART_REG_EMPTY_INT_VECTOR  SIG_UART_DATA
++   #define UART_RCV_INT_VECTOR  UART_RX_vect
++   #define UART_REG_EMPTY_INT_VECTOR  UART_UDRE_vect
+    #define UART_DATA_REG        UDR
+ #else
+    // Defaults to AT90S2313
+    #define UART_BAUD_REG        UBRR
+    #define UART_CONTROL_REG     UCR
+    #define UART_STATUS_REG      USR
+-   #define UART_RCV_INT_VECTOR  SIG_UART_RECV
+-   #define UART_REG_EMPTY_INT_VECTOR  SIG_UART_DATA
++   #define UART_RCV_INT_VECTOR  UART_RX_vect
++   #define UART_REG_EMPTY_INT_VECTOR  UART_UDRE_vect
+    #define UART_DATA_REG        UDR
+ #endif
+ 
+diff -rupN simulavr-1.0.0-original/examples/atmel_key/kb.c simulavr-1.0.0-new/examples/atmel_key/kb.c
+--- simulavr-1.0.0-original/examples/atmel_key/kb.c	2012-02-12 07:26:38.000000000 -0800
++++ simulavr-1.0.0-new/examples/atmel_key/kb.c	2014-05-20 13:26:11.000000000 -0700
+@@ -36,7 +36,7 @@ void init_kb(void)
+     bitcount = 11;
+ }
+ 
+-SIGNAL(SIG_INTERRUPT0)
++SIGNAL(INT0_vect)
+ {
+     static unsigned char data;                // Holds the received scan code
+ 
+diff -rupN simulavr-1.0.0-original/examples/atmel_key/main.c simulavr-1.0.0-new/examples/atmel_key/main.c
+--- simulavr-1.0.0-original/examples/atmel_key/main.c	2012-02-12 07:26:38.000000000 -0800
++++ simulavr-1.0.0-new/examples/atmel_key/main.c	2014-05-20 13:26:11.000000000 -0700
+@@ -5,6 +5,7 @@
+ // PS-1 Keyboard interface test program
+ 
+ #include <avr/io.h>
++#include <util/delay.h>
+ #include <stdlib.h>
+ //include <sig-avr.h>
+ #include <avr/interrupt.h>
+@@ -31,7 +32,7 @@ int main(void)
+     {
+         key=getchar();
+         putchar(key);
+-        msleep(10);
++        _delay_ms(10);
+     }
+     return 1;
+ }
+diff -rupN simulavr-1.0.0-original/examples/atmel_key/scancodes.h simulavr-1.0.0-new/examples/atmel_key/scancodes.h
+--- simulavr-1.0.0-original/examples/atmel_key/scancodes.h	2012-02-12 07:26:38.000000000 -0800
++++ simulavr-1.0.0-new/examples/atmel_key/scancodes.h	2014-05-20 13:26:11.000000000 -0700
+@@ -10,12 +10,14 @@
+ // incorrect or my keyboard was incorrect or I am missing some fundamental
+ // issue. A ':' now shows up as a ':' on the terminal.
+ 
++//for compatibility:
++#define __PROG_TYPES_COMPAT__
+ 
+ #include <avr/pgmspace.h>
+ 
+ // Unshifted characters
+ 
+-static char unshifted[][2]  __attribute__ ((progmem)) = {
++static const char unshifted[][2]  __attribute__ ((progmem)) = {
+ 0x0d,9,
+ 0x0e,'`',
+ 0x15,'q',
+@@ -87,7 +89,7 @@ static char unshifted[][2]  __attribute_
+ };
+ 
+ // Shifted characters
+-prog_char shifted[][2] = {
++char shifted[][2] = {
+ 0x0d,9,
+ 0x0e,'~',
+ 0x15,'Q',
+diff -rupN simulavr-1.0.0-original/examples/python/ex_pinout.c simulavr-1.0.0-new/examples/python/ex_pinout.c
+--- simulavr-1.0.0-original/examples/python/ex_pinout.c	2012-02-12 07:26:38.000000000 -0800
++++ simulavr-1.0.0-new/examples/python/ex_pinout.c	2014-05-20 13:26:11.000000000 -0700
+@@ -3,7 +3,7 @@
+ 
+ volatile int timer2_ticks;
+ 
+-ISR(SIG_OUTPUT_COMPARE2) {
++ISR(TIMER2_COMP_vect) {
+    timer2_ticks++;
+ }
+ 
+diff -rupN simulavr-1.0.0-original/examples/python/example.c simulavr-1.0.0-new/examples/python/example.c
+--- simulavr-1.0.0-original/examples/python/example.c	2012-02-12 07:26:38.000000000 -0800
++++ simulavr-1.0.0-new/examples/python/example.c	2014-05-20 13:26:11.000000000 -0700
+@@ -4,7 +4,7 @@
+ volatile int timer2_ticks;
+ 
+ /* Every ~ms */
+-ISR(SIG_OUTPUT_COMPARE2) {
++ISR(TIMER2_COMP_vect) {
+    timer2_ticks++;
+ }
+ 
+diff -rupN simulavr-1.0.0-original/examples/python/example_io.c simulavr-1.0.0-new/examples/python/example_io.c
+--- simulavr-1.0.0-original/examples/python/example_io.c	2012-02-12 07:26:38.000000000 -0800
++++ simulavr-1.0.0-new/examples/python/example_io.c	2014-05-20 13:26:11.000000000 -0700
+@@ -5,7 +5,7 @@ volatile int timer2_ticks;
+ volatile int port_val;
+ volatile int port_cnt;
+ 
+-ISR(SIG_OUTPUT_COMPARE2) {
++ISR(TIMER2_COMP_vect) {
+    timer2_ticks++;
+ }
+ 
+diff -rupN simulavr-1.0.0-original/examples/python/multicore.c simulavr-1.0.0-new/examples/python/multicore.c
+--- simulavr-1.0.0-original/examples/python/multicore.c	2012-02-12 07:26:38.000000000 -0800
++++ simulavr-1.0.0-new/examples/python/multicore.c	2014-05-20 13:26:11.000000000 -0700
+@@ -11,7 +11,7 @@
+ volatile char cnt_irq = 0;         // IRQ counter
+ volatile char cnt_res = 0;         // measurement value for time distance between events
+ 
+-ISR(SIG_INTERRUPT0) {
++ISR(INT0_vect) {
+   cnt_irq++;                       // increment event counter
+   cnt_res = TCNT0;                 // save timer value = time distance to last event
+   TCNT0 = 0;                       // reset timer value
+diff -rupN simulavr-1.0.0-original/regress/extinttest/ext_int0.c simulavr-1.0.0-new/regress/extinttest/ext_int0.c
+--- simulavr-1.0.0-original/regress/extinttest/ext_int0.c	2012-02-12 07:26:38.000000000 -0800
++++ simulavr-1.0.0-new/regress/extinttest/ext_int0.c	2014-05-20 13:26:11.000000000 -0700
+@@ -89,12 +89,12 @@ volatile unsigned char hs_data = 0;
+ volatile unsigned char dis_mask = 0;
+ 
+ #if defined(TEST_INT1)
+-  ISR(SIG_INTERRUPT1) {
++  ISR(INT1_vect) {
+ #else
+ # if defined(TEST_INT2_16)
+-  ISR(SIG_INTERRUPT2) {
++  ISR(INT2_vect) {
+ # else
+-  ISR(SIG_INTERRUPT0) {
++  ISR(INT0_vect) {
+ # endif
+ #endif
+   cnt_irq++;
+diff -rupN simulavr-1.0.0-original/regress/extinttest/ext_pcint.c simulavr-1.0.0-new/regress/extinttest/ext_pcint.c
+--- simulavr-1.0.0-original/regress/extinttest/ext_pcint.c	2012-02-12 07:26:38.000000000 -0800
++++ simulavr-1.0.0-new/regress/extinttest/ext_pcint.c	2014-05-20 13:26:11.000000000 -0700
+@@ -23,10 +23,10 @@ volatile unsigned char hs_cmd = 0;
+ volatile unsigned char hs_data = 0;
+ 
+ #if defined(__AVR_ATtiny2313__)
+-  ISR(SIG_PIN_CHANGE) {
++  ISR(PCINT_vect) {
+ #endif
+ #if defined(__AVR_ATmega48__)
+-  ISR(SIG_PIN_CHANGE1) {
++  ISR(PCINT1_vect) {
+ #endif
+   cnt_irq++;
+ }
+diff -rupN simulavr-1.0.0-original/regress/timertest/timer_16bit.c simulavr-1.0.0-new/regress/timertest/timer_16bit.c
+--- simulavr-1.0.0-original/regress/timertest/timer_16bit.c	2012-02-12 07:26:38.000000000 -0800
++++ simulavr-1.0.0-new/regress/timertest/timer_16bit.c	2014-05-20 13:26:11.000000000 -0700
+@@ -4,14 +4,14 @@
+ volatile int timer_ticks;
+ 
+ #ifdef T3TEST
+-ISR(SIG_OVERFLOW3) {
++ISR(TIMER2_OVF_vect) {
+    timer_ticks++;
+ }
+-ISR(SIG_OUTPUT_COMPARE3B) {
++ISR(TIMER3_COMPB_vect) {
+    timer_ticks++;
+ }
+ #else
+-ISR(SIG_OVERFLOW1) {
++ISR(TIMER1_OVF_vect) {
+    timer_ticks++;
+ }
+ #endif
+diff -rupN simulavr-1.0.0-original/regress/timertest/timer_16bit_icap.c simulavr-1.0.0-new/regress/timertest/timer_16bit_icap.c
+--- simulavr-1.0.0-original/regress/timertest/timer_16bit_icap.c	2012-02-12 07:26:38.000000000 -0800
++++ simulavr-1.0.0-new/regress/timertest/timer_16bit_icap.c	2014-05-20 13:26:11.000000000 -0700
+@@ -4,11 +4,11 @@
+ volatile int timer_ticks;
+ volatile int input_capture;
+ 
+-ISR(SIG_OVERFLOW1) {
++ISR(TIMER3_OVF_vect) {
+    timer_ticks++;
+ }
+ 
+-ISR(SIG_INPUT_CAPTURE1) {
++ISR(TIMER1_CAPT_vect) {
+   input_capture = ICR1L + (ICR1H << 8);
+ }
+ 
+diff -rupN simulavr-1.0.0-original/regress/timertest/timer_8bit.c simulavr-1.0.0-new/regress/timertest/timer_8bit.c
+--- simulavr-1.0.0-original/regress/timertest/timer_8bit.c	2012-02-12 07:26:38.000000000 -0800
++++ simulavr-1.0.0-new/regress/timertest/timer_8bit.c	2014-05-20 13:26:11.000000000 -0700
+@@ -3,7 +3,7 @@
+ 
+ volatile int timer_ticks;
+ 
+-ISR(SIG_OVERFLOW0) {
++ISR(TIMER0_OVF_vect) {
+    timer_ticks++;
+ }
+ 
+diff -rupN simulavr-1.0.0-original/regress/timertest/timer_8bit_ctc.c simulavr-1.0.0-new/regress/timertest/timer_8bit_ctc.c
+--- simulavr-1.0.0-original/regress/timertest/timer_8bit_ctc.c	2012-02-12 07:26:38.000000000 -0800
++++ simulavr-1.0.0-new/regress/timertest/timer_8bit_ctc.c	2014-05-20 13:26:11.000000000 -0700
+@@ -4,7 +4,7 @@
+ volatile int timer_ticks;
+ 
+ #ifdef PROC_atmega48
+-ISR(SIG_OUTPUT_COMPARE2A) {
++ISR(TIMER2_COMPA_vect) {
+    timer_ticks++;
+ }
+ #else
