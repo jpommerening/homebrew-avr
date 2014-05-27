@@ -8,7 +8,7 @@ class Simulavr < Formula
 
   depends_on 'jpommerening/avr/avr-binutils'
   depends_on 'jpommerening/avr/avr-libc'
-  depends_on 'jpommerening/avr/swig-1.3'
+  depends_on 'jpommerening/avr/swig-13'
 
   if build.head?
     depends_on 'autoconf'
@@ -23,7 +23,7 @@ class Simulavr < Formula
       patchlist = [ 'file://' + patchdir + '/patches/simulavr-HEAD-glibtool.patch' ]
     end
     
-    return patchlist + ['/patches/simulavr-1.0.0_avrgcc4.7.2-darwin.patch']
+    return patchlist + [ 'file://' + patchdir + '/patches/simulavr-1.0.0_avrgcc4.7.2-darwin.patch']
   end
 
   def install

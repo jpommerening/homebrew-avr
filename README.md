@@ -6,5 +6,6 @@ this one includes [SimulAVR](http://www.nongnu.org/simulavr/) and GDB.
 
 ```console
 jpommerening@bar$ brew tap jpommerening/avr
-jpommerening@bar$ brew install simulavr
+jpommerening@bar$ brew install avr-gcc avr-gdb
+jpommerening@bar$ brew install --HEAD simulavr
 ```

@@ -1,6 +1,5 @@
-diff -rupN original/simulavr-1.0.0/examples/atmega128_timer/main.c new/simulavr-1.0.0/examples/atmega128_timer/main.c
---- original/simulavr-1.0.0/examples/atmega128_timer/main.c	2012-02-12 07:26:38.000000000 -0800
-+++ new/simulavr-1.0.0/examples/atmega128_timer/main.c	2014-05-20 13:26:11.000000000 -0700
+--- simulavr-1.0.0/examples/atmega128_timer/main.c	2012-02-12 07:26:38.000000000 -0800
++++ simulavr-1.0.0/examples/atmega128_timer/main.c	2014-05-20 13:26:11.000000000 -0700
 @@ -5,7 +5,7 @@
  volatile int timer2_ticks;
  
@@ -10,9 +9,8 @@ diff -rupN original/simulavr-1.0.0/examples/atmega128_timer/main.c new/simulavr-
  {                               /* Every ~1ms */
     timer2_ticks++;
  }
-diff -rupN original/simulavr-1.0.0/examples/atmel_key/Makefile.am new/simulavr-1.0.0/examples/atmel_key/Makefile.am
---- original/simulavr-1.0.0/examples/atmel_key/Makefile.am	2012-02-12 07:26:38.000000000 -0800
-+++ new/simulavr-1.0.0/examples/atmel_key/Makefile.am	2014-05-20 13:26:11.000000000 -0700
+--- simulavr-1.0.0/examples/atmel_key/Makefile.am	2012-02-12 07:26:38.000000000 -0800
++++ simulavr-1.0.0/examples/atmel_key/Makefile.am	2014-05-20 13:26:11.000000000 -0700
 @@ -10,7 +10,7 @@ AVR_CPU=atmega128
  AVR_CPU_CFLAGS =-mmcu=$(AVR_CPU)
  AVR_CFLAGS = $(AVR_CPU_CFLAGS) -I. -DF_CPU=4000000UL \
@@ -22,9 +20,8 @@ diff -rupN original/simulavr-1.0.0/examples/atmel_key/Makefile.am new/simulavr-1
  
  EXTRA_DIST = kb.c kb.h main.c pindefs.h scancodes.h serial.c serial.h \
    StdDefs.c StdDefs.h README Notes.txt atmel_key.tcl
-diff -rupN original/simulavr-1.0.0/examples/atmel_key/StdDefs.c new/simulavr-1.0.0/examples/atmel_key/StdDefs.c
---- original/simulavr-1.0.0/examples/atmel_key/StdDefs.c	2012-02-12 07:26:38.000000000 -0800
-+++ new/simulavr-1.0.0/examples/atmel_key/StdDefs.c	2014-05-20 13:26:11.000000000 -0700
+--- simulavr-1.0.0/examples/atmel_key/StdDefs.c	2012-02-12 07:26:38.000000000 -0800
++++ simulavr-1.0.0/examples/atmel_key/StdDefs.c	2014-05-20 13:26:11.000000000 -0700
 @@ -3,9 +3,8 @@
   */
  
@@ -62,9 +59,8 @@ diff -rupN original/simulavr-1.0.0/examples/atmel_key/StdDefs.c new/simulavr-1.0
  //------------------------------------------------------------
  // void putBCD(INT16S X, CHARU length, CHARU TrailingSpace)
  //
-diff -rupN original/simulavr-1.0.0/examples/atmel_key/StdDefs.h new/simulavr-1.0.0/examples/atmel_key/StdDefs.h
---- original/simulavr-1.0.0/examples/atmel_key/StdDefs.h	2012-02-12 07:26:38.000000000 -0800
-+++ new/simulavr-1.0.0/examples/atmel_key/StdDefs.h	2014-05-20 13:26:11.000000000 -0700
+--- simulavr-1.0.0/examples/atmel_key/StdDefs.h	2012-02-12 07:26:38.000000000 -0800
++++ simulavr-1.0.0/examples/atmel_key/StdDefs.h	2014-05-20 13:26:11.000000000 -0700
 @@ -63,51 +63,51 @@ void print_hexbyte(unsigned char i);
     #define UART_BAUD_REG_H      UBRR0H
     #define UART_CONTROL_REG     UCSR0B
@@ -131,9 +127,8 @@ diff -rupN original/simulavr-1.0.0/examples/atmel_key/StdDefs.h new/simulavr-1.0
     #define UART_DATA_REG        UDR
  #endif
  
-diff -rupN original/simulavr-1.0.0/examples/atmel_key/kb.c new/simulavr-1.0.0/examples/atmel_key/kb.c
---- original/simulavr-1.0.0/examples/atmel_key/kb.c	2012-02-12 07:26:38.000000000 -0800
-+++ new/simulavr-1.0.0/examples/atmel_key/kb.c	2014-05-20 13:26:11.000000000 -0700
+--- simulavr-1.0.0/examples/atmel_key/kb.c	2012-02-12 07:26:38.000000000 -0800
++++ simulavr-1.0.0/examples/atmel_key/kb.c	2014-05-20 13:26:11.000000000 -0700
 @@ -36,7 +36,7 @@ void init_kb(void)
      bitcount = 11;
  }
@@ -143,9 +138,8 @@ diff -rupN original/simulavr-1.0.0/examples/atmel_key/kb.c new/simulavr-1.0.0/ex
  {
      static unsigned char data;                // Holds the received scan code
  
-diff -rupN original/simulavr-1.0.0/examples/atmel_key/main.c new/simulavr-1.0.0/examples/atmel_key/main.c
---- original/simulavr-1.0.0/examples/atmel_key/main.c	2012-02-12 07:26:38.000000000 -0800
-+++ new/simulavr-1.0.0/examples/atmel_key/main.c	2014-05-20 13:26:11.000000000 -0700
+--- simulavr-1.0.0/examples/atmel_key/main.c	2012-02-12 07:26:38.000000000 -0800
++++ simulavr-1.0.0/examples/atmel_key/main.c	2014-05-20 13:26:11.000000000 -0700
 @@ -5,6 +5,7 @@
  // PS-1 Keyboard interface test program
  
@@ -163,9 +157,8 @@ diff -rupN original/simulavr-1.0.0/examples/atmel_key/main.c new/simulavr-1.0.0/
      }
      return 1;
  }
-diff -rupN original/simulavr-1.0.0/examples/atmel_key/scancodes.h new/simulavr-1.0.0/examples/atmel_key/scancodes.h
---- original/simulavr-1.0.0/examples/atmel_key/scancodes.h	2012-02-12 07:26:38.000000000 -0800
-+++ new/simulavr-1.0.0/examples/atmel_key/scancodes.h	2014-05-20 13:26:11.000000000 -0700
+--- simulavr-1.0.0/examples/atmel_key/scancodes.h	2012-02-12 07:26:38.000000000 -0800
++++ simulavr-1.0.0/examples/atmel_key/scancodes.h	2014-05-20 13:26:11.000000000 -0700
 @@ -10,12 +10,14 @@
  // incorrect or my keyboard was incorrect or I am missing some fundamental
  // issue. A ':' now shows up as a ':' on the terminal.
@@ -191,9 +184,8 @@ diff -rupN original/simulavr-1.0.0/examples/atmel_key/scancodes.h new/simulavr-1
  0x0d,9,
  0x0e,'~',
  0x15,'Q',
-diff -rupN original/simulavr-1.0.0/examples/python/ex_pinout.c new/simulavr-1.0.0/examples/python/ex_pinout.c
---- original/simulavr-1.0.0/examples/python/ex_pinout.c	2012-02-12 07:26:38.000000000 -0800
-+++ new/simulavr-1.0.0/examples/python/ex_pinout.c	2014-05-20 13:26:11.000000000 -0700
+--- simulavr-1.0.0/examples/python/ex_pinout.c	2012-02-12 07:26:38.000000000 -0800
++++ simulavr-1.0.0/examples/python/ex_pinout.c	2014-05-20 13:26:11.000000000 -0700
 @@ -3,7 +3,7 @@
  
  volatile int timer2_ticks;
@@ -203,9 +195,8 @@ diff -rupN original/simulavr-1.0.0/examples/python/ex_pinout.c new/simulavr-1.0.
     timer2_ticks++;
  }
  
-diff -rupN original/simulavr-1.0.0/examples/python/example.c new/simulavr-1.0.0/examples/python/example.c
---- original/simulavr-1.0.0/examples/python/example.c	2012-02-12 07:26:38.000000000 -0800
-+++ new/simulavr-1.0.0/examples/python/example.c	2014-05-20 13:26:11.000000000 -0700
+--- simulavr-1.0.0/examples/python/example.c	2012-02-12 07:26:38.000000000 -0800
++++ simulavr-1.0.0/examples/python/example.c	2014-05-20 13:26:11.000000000 -0700
 @@ -4,7 +4,7 @@
  volatile int timer2_ticks;
  
@@ -215,9 +206,8 @@ diff -rupN original/simulavr-1.0.0/examples/python/example.c new/simulavr-1.0.0/
     timer2_ticks++;
  }
  
-diff -rupN original/simulavr-1.0.0/examples/python/example_io.c new/simulavr-1.0.0/examples/python/example_io.c
---- original/simulavr-1.0.0/examples/python/example_io.c	2012-02-12 07:26:38.000000000 -0800
-+++ new/simulavr-1.0.0/examples/python/example_io.c	2014-05-20 13:26:11.000000000 -0700
+--- simulavr-1.0.0/examples/python/example_io.c	2012-02-12 07:26:38.000000000 -0800
++++ simulavr-1.0.0/examples/python/example_io.c	2014-05-20 13:26:11.000000000 -0700
 @@ -5,7 +5,7 @@ volatile int timer2_ticks;
  volatile int port_val;
  volatile int port_cnt;
@@ -227,9 +217,8 @@ diff -rupN original/simulavr-1.0.0/examples/python/example_io.c new/simulavr-1.0
     timer2_ticks++;
  }
  
-diff -rupN original/simulavr-1.0.0/examples/python/multicore.c new/simulavr-1.0.0/examples/python/multicore.c
---- original/simulavr-1.0.0/examples/python/multicore.c	2012-02-12 07:26:38.000000000 -0800
-+++ new/simulavr-1.0.0/examples/python/multicore.c	2014-05-20 13:26:11.000000000 -0700
+--- simulavr-1.0.0/examples/python/multicore.c	2012-02-12 07:26:38.000000000 -0800
++++ simulavr-1.0.0/examples/python/multicore.c	2014-05-20 13:26:11.000000000 -0700
 @@ -11,7 +11,7 @@
  volatile char cnt_irq = 0;         // IRQ counter
  volatile char cnt_res = 0;         // measurement value for time distance between events
@@ -239,9 +228,8 @@ diff -rupN original/simulavr-1.0.0/examples/python/multicore.c new/simulavr-1.0.
    cnt_irq++;                       // increment event counter
    cnt_res = TCNT0;                 // save timer value = time distance to last event
    TCNT0 = 0;                       // reset timer value
-diff -rupN original/simulavr-1.0.0/regress/extinttest/ext_int0.c new/simulavr-1.0.0/regress/extinttest/ext_int0.c
---- original/simulavr-1.0.0/regress/extinttest/ext_int0.c	2012-02-12 07:26:38.000000000 -0800
-+++ new/simulavr-1.0.0/regress/extinttest/ext_int0.c	2014-05-20 13:26:11.000000000 -0700
+--- simulavr-1.0.0/regress/extinttest/ext_int0.c	2012-02-12 07:26:38.000000000 -0800
++++ simulavr-1.0.0/regress/extinttest/ext_int0.c	2014-05-20 13:26:11.000000000 -0700
 @@ -89,12 +89,12 @@ volatile unsigned char hs_data = 0;
  volatile unsigned char dis_mask = 0;
  
@@ -258,9 +246,8 @@ diff -rupN original/simulavr-1.0.0/regress/extinttest/ext_int0.c new/simulavr-1.
  # endif
  #endif
    cnt_irq++;
-diff -rupN original/simulavr-1.0.0/regress/extinttest/ext_pcint.c new/simulavr-1.0.0/regress/extinttest/ext_pcint.c
---- original/simulavr-1.0.0/regress/extinttest/ext_pcint.c	2012-02-12 07:26:38.000000000 -0800
-+++ new/simulavr-1.0.0/regress/extinttest/ext_pcint.c	2014-05-20 13:26:11.000000000 -0700
+--- simulavr-1.0.0/regress/extinttest/ext_pcint.c	2012-02-12 07:26:38.000000000 -0800
++++ simulavr-1.0.0/regress/extinttest/ext_pcint.c	2014-05-20 13:26:11.000000000 -0700
 @@ -23,10 +23,10 @@ volatile unsigned char hs_cmd = 0;
  volatile unsigned char hs_data = 0;
  
@@ -274,9 +261,8 @@ diff -rupN original/simulavr-1.0.0/regress/extinttest/ext_pcint.c new/simulavr-1
  #endif
    cnt_irq++;
  }
-diff -rupN original/simulavr-1.0.0/regress/timertest/timer_16bit.c new/simulavr-1.0.0/regress/timertest/timer_16bit.c
---- original/simulavr-1.0.0/regress/timertest/timer_16bit.c	2012-02-12 07:26:38.000000000 -0800
-+++ new/simulavr-1.0.0/regress/timertest/timer_16bit.c	2014-05-20 13:26:11.000000000 -0700
+--- simulavr-1.0.0/regress/timertest/timer_16bit.c	2012-02-12 07:26:38.000000000 -0800
++++ simulavr-1.0.0/regress/timertest/timer_16bit.c	2014-05-20 13:26:11.000000000 -0700
 @@ -4,14 +4,14 @@
  volatile int timer_ticks;
  
@@ -295,9 +281,8 @@ diff -rupN original/simulavr-1.0.0/regress/timertest/timer_16bit.c new/simulavr-
     timer_ticks++;
  }
  #endif
-diff -rupN original/simulavr-1.0.0/regress/timertest/timer_16bit_icap.c new/simulavr-1.0.0/regress/timertest/timer_16bit_icap.c
---- original/simulavr-1.0.0/regress/timertest/timer_16bit_icap.c	2012-02-12 07:26:38.000000000 -0800
-+++ new/simulavr-1.0.0/regress/timertest/timer_16bit_icap.c	2014-05-20 13:26:11.000000000 -0700
+--- simulavr-1.0.0/regress/timertest/timer_16bit_icap.c	2012-02-12 07:26:38.000000000 -0800
++++ simulavr-1.0.0/regress/timertest/timer_16bit_icap.c	2014-05-20 13:26:11.000000000 -0700
 @@ -4,11 +4,11 @@
  volatile int timer_ticks;
  volatile int input_capture;
@@ -312,9 +297,8 @@ diff -rupN original/simulavr-1.0.0/regress/timertest/timer_16bit_icap.c new/simu
    input_capture = ICR1L + (ICR1H << 8);
  }
  
-diff -rupN original/simulavr-1.0.0/regress/timertest/timer_8bit.c new/simulavr-1.0.0/regress/timertest/timer_8bit.c
---- original/simulavr-1.0.0/regress/timertest/timer_8bit.c	2012-02-12 07:26:38.000000000 -0800
-+++ new/simulavr-1.0.0/regress/timertest/timer_8bit.c	2014-05-20 13:26:11.000000000 -0700
+--- simulavr-1.0.0/regress/timertest/timer_8bit.c	2012-02-12 07:26:38.000000000 -0800
++++ simulavr-1.0.0/regress/timertest/timer_8bit.c	2014-05-20 13:26:11.000000000 -0700
 @@ -3,7 +3,7 @@
  
  volatile int timer_ticks;
@@ -324,9 +308,8 @@ diff -rupN original/simulavr-1.0.0/regress/timertest/timer_8bit.c new/simulavr-1
     timer_ticks++;
  }
  
-diff -rupN original/simulavr-1.0.0/regress/timertest/timer_8bit_ctc.c new/simulavr-1.0.0/regress/timertest/timer_8bit_ctc.c
---- original/simulavr-1.0.0/regress/timertest/timer_8bit_ctc.c	2012-02-12 07:26:38.000000000 -0800
-+++ new/simulavr-1.0.0/regress/timertest/timer_8bit_ctc.c	2014-05-20 13:26:11.000000000 -0700
+--- simulavr-1.0.0/regress/timertest/timer_8bit_ctc.c	2012-02-12 07:26:38.000000000 -0800
++++ simulavr-1.0.0/regress/timertest/timer_8bit_ctc.c	2014-05-20 13:26:11.000000000 -0700
 @@ -4,7 +4,7 @@
  volatile int timer_ticks;
  
