@@ -11,7 +11,9 @@ class Simulavr < Formula
   depends_on 'jpommerening/avr/swig-13'
 
   if build.head?
+    depends_on 'libtool'
     depends_on 'autoconf'
+    depends_on 'automake'
   end
 
   def patches
