@@ -7,9 +7,9 @@ class Simulavr < Formula
   head 'https://github.com/jpommerening/simulavr.git'
   sha1 'e7cacc74be974793bd9c18330ec8d128fbd17d42'
 
-  depends_on "#{tap}/avr-binutils"
-  depends_on "#{tap}/avr-libc"
-  depends_on "#{tap}/swig-13"
+  depends_on 'avr-binutils'
+  depends_on 'avr-libc'
+  depends_on 'swig-13'
 
   if build.head?
     depends_on 'libtool'
@@ -31,7 +31,7 @@ class Simulavr < Formula
   def install
     multios = `gcc --print-multi-os-directory`.chomp
     osrelease = `/usr/sbin/sysctl -n kern.osrelease`.chomp
-    binutils = Formula.factory("#{tap}/avr-binutils")
+    binutils = Formula.factory('avr-binutils')
 
     if build.head?
       system "./bootstrap"

@@ -14,7 +14,7 @@ class AvrGcc < Formula
   mirror "http://ftpmirror.gnu.org/gnu/gcc/gcc-#{version}/gcc-#{version}.tar.bz2"
   sha1 '79dbcb09f44232822460d80b033c962c0237c6d8'
 
-  depends_on "#{tap}/avr-binutils"
+  depends_on 'avr-binutils'
   depends_on 'gmp'
   depends_on 'libmpc'
   depends_on 'mpfr'

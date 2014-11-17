@@ -6,7 +6,7 @@ class AvrLibc < Formula
   url "http://download.savannah.gnu.org/releases/avr-libc/avr-libc-#{version}.tar.bz2"
   sha1 'b56fe21b30341869aa768689b0f6a07d896b17fa'
 
-  depends_on "#{tap}/avr-gcc"
+  depends_on 'avr-gcc'
 
   def install
     # brew's build environment is in our way
@@ -16,7 +16,7 @@ class AvrLibc < Formula
     ENV.delete 'CC'
     ENV.delete 'CXX'
 
-    avr_gcc = Formula.factory("#{tap}/avr-gcc")
+    avr_gcc = Formula.factory('avr-gcc')
     build = `./config.guess`.chomp
     system "./configure", "--build=#{build}", "--prefix=#{prefix}", "--host=avr"
     system "make install"

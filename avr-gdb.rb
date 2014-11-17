@@ -7,7 +7,7 @@ class AvrGdb < Formula
   mirror "http://ftpmirror.gnu.org/gnu/gdb/gdb-#{version}.tar.gz"
   sha1 '4810d78a77064fefc05e701fc0a2193562a23afe'
 
-  depends_on "#{tap}/avr-binutils"
+  depends_on 'avr-binutils'
 
   def install
     multios = `gcc --print-multi-os-directory`.chomp
