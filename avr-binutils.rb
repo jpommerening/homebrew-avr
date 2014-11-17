@@ -3,7 +3,7 @@ require 'formula'
 class AvrBinutils < Formula
   homepage 'http://www.gnu.org/software/binutils/binutils.html'
   version '2.24'
-  url "http://ftp.gnu.org/gun/binutils/binutils-#{version}.tar.bz2"
+  url "http://ftp.gnu.org/gnu/binutils/binutils-#{version}.tar.bz2"
   mirror "http://ftpmirror.gnu.org/binutils/binutils-#{version}.tar.bz2"
   sha1 '7ac75404ddb3c4910c7594b51ddfc76d4693debb'
 
