@@ -1,14 +1,15 @@
 require 'formula'
 
 class Simulavr < Formula
-  homepage 'http://savannah.nongnu.org/projects/simulavr/'
-  url 'http://download.savannah.gnu.org/releases/simulavr/simulavr-1.0.0.tar.gz'
-  sha1 'e7cacc74be974793bd9c18330ec8d128fbd17d42'
+  homepage 'http://www.nongnu.org/simulavr/'
+  version '1.0.0'
+  url "http://download.savannah.gnu.org/releases/simulavr/simulavr-#{version}.tar.gz"
   head 'https://github.com/jpommerening/simulavr.git'
+  sha1 'e7cacc74be974793bd9c18330ec8d128fbd17d42'
 
-  depends_on 'jpommerening/avr/avr-binutils'
-  depends_on 'jpommerening/avr/avr-libc'
-  depends_on 'jpommerening/avr/swig-13'
+  depends_on "#{tap}/avr-binutils"
+  depends_on "#{tap}/avr-libc"
+  depends_on "#{tap}/swig-13"
 
   if build.head?
     depends_on 'libtool'
@@ -23,14 +24,14 @@ class Simulavr < Formula
       [ 'file://' + patchdir + '/patches/simulavr-HEAD-glibtool.patch' ]
     else
       [ 'file://' + patchdir + '/patches/simulavr-1.0.0-resize.patch',
-        'file://' + patchdir + '/patches/simulavr-1.0.0_avrgcc4.7.2-darwin.patch' ]
+        'file://' + patchdir + '/patches/simulavr-1.0.0_avrgcc4.9.2-darwin.patch' ]
     end
   end
 
   def install
     multios = `gcc --print-multi-os-directory`.chomp
     osrelease = `/usr/sbin/sysctl -n kern.osrelease`.chomp
-    binutils = Formula.factory('jpommerening/avr/avr-binutils')
+    binutils = Formula.factory("#{tap}/avr-binutils")
 
     if build.head?
       system "./bootstrap"

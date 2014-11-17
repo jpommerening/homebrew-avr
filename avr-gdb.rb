@@ -2,10 +2,12 @@ require 'formula'
 
 class AvrGdb < Formula
   homepage 'http://www.gnu.org/software/gdb/'
-  url 'ftp://ftp.gnu.org/gnu/gdb/gdb-7.6.1.tar.gz'
-  sha1 '13beaab7d28f8591777c9271f0c20a22c70d6252'
+  version '7.8.1'
+  url "http://ftp.gnu.org/gnu/gdb/gdb-#{version}.tar.gz"
+  mirror "http://ftpmirror.gnu.org/gnu/gdb/gdb-#{version}.tar.gz"
+  sha1 '4810d78a77064fefc05e701fc0a2193562a23afe'
 
-  depends_on 'jpommerening/avr/avr-binutils'
+  depends_on "#{tap}/avr-binutils"
 
   def install
     multios = `gcc --print-multi-os-directory`.chomp

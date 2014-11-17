@@ -1,11 +1,12 @@
 require 'formula'
 
 class AvrLibc < Formula
-  url 'http://download.savannah.gnu.org/releases/avr-libc/avr-libc-1.8.0.tar.bz2'
   homepage 'http://www.nongnu.org/avr-libc/'
-  sha1 '2e3815221be8e22f5f2c07b922ce92ecfa85bade'
+  version '1.8.0'
+  url "http://download.savannah.gnu.org/releases/avr-libc/avr-libc-#{version}.tar.bz2"
+  sha1 'b56fe21b30341869aa768689b0f6a07d896b17fa'
 
-  depends_on 'jpommerening/avr/avr-gcc'
+  depends_on "#{tap}/avr-gcc"
 
   def install
     # brew's build environment is in our way
@@ -15,7 +16,7 @@ class AvrLibc < Formula
     ENV.delete 'CC'
     ENV.delete 'CXX'
 
-    avr_gcc = Formula.factory('jpommerening/avr/avr-gcc')
+    avr_gcc = Formula.factory("#{tap}/avr-gcc")
     build = `./config.guess`.chomp
     system "./configure", "--build=#{build}", "--prefix=#{prefix}", "--host=avr"
     system "make install"

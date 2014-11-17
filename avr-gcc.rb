@@ -9,10 +9,12 @@ end
 
 class AvrGcc < Formula
   homepage 'http://gcc.gnu.org'
-  url 'http://ftp.gnu.org/gnu/gcc/gcc-4.7.2/gcc-4.7.2.tar.bz2'
-  sha1 'a464ba0f26eef24c29bcd1e7489421117fb9ee35'
+  version '4.9.2'
+  url "http://ftp.gnu.org/gnu/gcc/gcc-#{version}/gcc-#{version}.tar.bz2"
+  mirror "http://ftpmirror.gnu.org/gnu/gcc/gcc-#{version}/gcc-#{version}.tar.bz2"
+  sha1 '79dbcb09f44232822460d80b033c962c0237c6d8'
 
-  depends_on 'jpommerening/avr/avr-binutils'
+  depends_on "#{tap}/avr-binutils"
   depends_on 'gmp'
   depends_on 'libmpc'
   depends_on 'mpfr'
@@ -35,10 +37,6 @@ class AvrGcc < Formula
     ENV.delete 'LD'
     ENV.delete 'NM'
     ENV.delete 'RANLIB'
-
-    if MacOS.lion?
-      ENV['CC'] = 'llvm-gcc'
-    end
 
     args = [
             "--target=avr",

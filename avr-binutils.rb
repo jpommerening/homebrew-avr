@@ -1,19 +1,13 @@
 require 'formula'
 
 class AvrBinutils < Formula
-  url 'http://ftpmirror.gnu.org/binutils/binutils-2.23.1.tar.bz2'
-  mirror 'http://ftp.gnu.org/gun/binutils/binutils-2.23.1.tar.bz2'
   homepage 'http://www.gnu.org/software/binutils/binutils.html'
-  sha1 '587fca86f6c85949576f4536a90a3c76ffc1a3e1'
+  version '2.24'
+  url "http://ftp.gnu.org/gun/binutils/binutils-#{version}.tar.bz2"
+  mirror "http://ftpmirror.gnu.org/binutils/binutils-#{version}.tar.bz2"
+  sha1 '7ac75404ddb3c4910c7594b51ddfc76d4693debb'
 
   def install
-
-    if MacOS.version == :lion
-      ENV['CC'] = ENV.cc
-    end
-
-    ENV['CPPFLAGS'] = "-I#{include}"
-
     args = ["--prefix=#{prefix}",
             "--infodir=#{info}",
             "--mandir=#{man}",
@@ -29,22 +23,11 @@ class AvrBinutils < Formula
     ENV.delete 'CC'
     ENV.delete 'CXX'
 
-    if MacOS.version == :lion
-      ENV['CC'] = ENV.cc
-    end
+    ENV['CPPFLAGS'] = "-I#{include}"
 
     system "./configure", *args
 
     system "make"
     system "make install"
   end
-
-  def patches
-    patchdir = path.realpath.dirname.to_s
-
-    # Support for -C in avr-size. See issue 
-    # https://github.com/larsimmisch/homebrew-avr/issues/9
-    [ 'file://' + patchdir + '/patches/avr-binutils-size.patch' ]
-  end
-
 end
