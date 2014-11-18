@@ -2,7 +2,7 @@ require 'formula'
 
 class AvrLibc < Formula
   homepage 'http://www.nongnu.org/avr-libc/'
-  version '1.8.0'
+  version '1.8.1'
   url "http://download.savannah.gnu.org/releases/avr-libc/avr-libc-#{version}.tar.bz2"
   sha1 'b56fe21b30341869aa768689b0f6a07d896b17fa'
 
