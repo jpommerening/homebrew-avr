@@ -14,7 +14,8 @@ class AvrBinutils < Formula
             "--disable-werror",
             "--disable-nls",
             "--target=avr",
-            "--enable-install-libbfd"]
+            "--enable-install-libbfd",
+            "--enable-install-libiberty"]
 
     # brew's build environment is in our way
     ENV.delete 'CFLAGS'
