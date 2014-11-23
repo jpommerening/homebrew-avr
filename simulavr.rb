@@ -24,7 +24,7 @@ class Simulavr < Formula
       [ 'file://' + patchdir + '/patches/simulavr-HEAD-glibtool.patch' ]
     else
       [ 'file://' + patchdir + '/patches/simulavr-1.0.0-resize.patch',
-        'file://' + patchdir + '/patches/simulavr-1.0.0_avrgcc4.9.2-darwin.patch' ]
+        'file://' + patchdir + '/patches/simulavr-1.0.0-avrgcc4.9.2-darwin.patch' ]
     end
   end
 
