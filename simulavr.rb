@@ -20,9 +20,7 @@ class Simulavr < Formula
   def patches
     patchdir = path.realpath.dirname.to_s
 
-    if build.head?
-      [ 'file://' + patchdir + '/patches/simulavr-HEAD-glibtool.patch' ]
-    else
+    unless build.head?
       [ 'file://' + patchdir + '/patches/simulavr-1.0.0-resize.patch',
         'file://' + patchdir + '/patches/simulavr-1.0.0-avrgcc4.9.2-darwin.patch' ]
     end
