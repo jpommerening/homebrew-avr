@@ -1,0 +1,11 @@
+--- simulavr-1.0.0/regress/Makefile.am	2014-11-26 19:12:06.000000000 +0100
++++ simulavr-1.0.0/regress/Makefile.am	2014-11-26 19:12:14.000000000 +0100
+@@ -6,7 +6,7 @@
+ 
+ EXTRA_DIST           = README regress.py.in
+ 
+-SUBDIRS              = modules test_opcodes avrtest timertest extinttest gtest modtest
++SUBDIRS              = modules test_opcodes avrtest timertest extinttest modtest
+ 
+ all:
+ 
