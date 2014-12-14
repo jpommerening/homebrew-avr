@@ -7,20 +7,16 @@ class Simulavr < Formula
   head 'https://github.com/jpommerening/simulavr.git'
   sha1 'e7cacc74be974793bd9c18330ec8d128fbd17d42'
 
-  resource "swig-1.3" do
-    url "http://sourceforge.net/projects/swig/files/swig/swig-1.3.40/swig-1.3.40.tar.gz"
-    sha1 '7e7a426579f2d2d967b731abf062b33aa894fb4e'
-  end
-
   depends_on 'avr-binutils'
   depends_on 'avr-libc'
-  depends_on 'pcre'
-  depends_on :python => :build  # assure swig find the "right" python
 
   if build.head?
     depends_on 'libtool'
     depends_on 'autoconf'
     depends_on 'automake'
+    depends_on 'swig'
+  else
+    depends_on 'swig-13'
   end
 
   def patches
@@ -35,13 +31,6 @@ class Simulavr < Formula
   end
 
   def install
-    resource("swig-1.3").stage do
-      system "./configure", "--disable-dependency-tracking",
-                            "--prefix=#{prefix}"
-      system "make"
-      system "make install"
-    end
-
     multios = `gcc --print-multi-os-directory`.chomp
     osrelease = `/usr/sbin/sysctl -n kern.osrelease`.chomp
     binutils = Formula.factory('avr-binutils')
