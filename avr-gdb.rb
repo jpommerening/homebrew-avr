@@ -5,7 +5,7 @@ class AvrGdb < Formula
   version '7.8.1'
   url "http://ftp.gnu.org/gnu/gdb/gdb-#{version}.tar.gz"
   mirror "http://ftpmirror.gnu.org/gnu/gdb/gdb-#{version}.tar.gz"
-  sha1 '4810d78a77064fefc05e701fc0a2193562a23afe'
+  sha1 '36a9c4d365bf937f80eec13451bc6cc5eb94e562'
 
   depends_on 'avr-binutils'
 
