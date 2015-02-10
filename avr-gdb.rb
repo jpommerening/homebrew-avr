@@ -17,9 +17,5 @@ class AvrGdb < Formula
                           "--program-prefix=avr-"
     system "make"
     system "make install"
-
-    # binutils already has a libiberty.a. We remove ours, because
-    # otherwise, the symlinking of the keg fails
-    File.unlink "#{prefix}/lib/#{multios}/libiberty.a"
   end
 end
