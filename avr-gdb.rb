@@ -10,12 +10,22 @@ class AvrGdb < Formula
   depends_on 'avr-binutils'
 
   def install
-    multios = `gcc --print-multi-os-directory`.chomp
+    args = ["--prefix=#{prefix}",
+            "--infodir=#{info}",
+            "--mandir=#{man}",
+            "--disable-werror",
+            "--disable-nls",
+            "--target=avr",
+            "--disable-install-libbfd",
+            "--disable-install-libiberty"]
 
-    system "./configure", "--prefix=#{prefix}",
-                          "--target=avr",
-                          "--program-prefix=avr-"
+    system "./configure", *args
+
     system "make"
     system "make install"
+
+    File.unlink "#{prefix}/share/info/bfd.info",
+                "#{prefix}/share/info/configure.info",
+                "#{prefix}/share/info/standards.info"
   end
 end
